@@ -28,7 +28,6 @@ requirements:
         - cross-python_${{ target_platform }}
         - numpy
         - python
-        - libpython
     - cmake >=3.15
     - ninja
     - ${{ stdlib('c') }}
