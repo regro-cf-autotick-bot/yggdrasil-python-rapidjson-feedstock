@@ -9,6 +9,8 @@ package:
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/yggdrasil_python_rapidjson-${{ version }}.tar.gz
   sha256: f5d659e61ac5efd0a16fd8405961b69f7a6e89d4c39e1d16658cf03e84ee1860
+  patches:
+    - 0001-find-python-no-interp.patch
 
 build:
   number: 4
