@@ -37,7 +37,8 @@ requirements:
         - cross-python_${{ host_platform }}
         - numpy
         - python
-        - libpython
+        - if: match(python, ">=3.15")
+          then: libpython
     - cmake >=3.15
     - ninja
     - ${{ stdlib('c') }}
@@ -49,13 +50,15 @@ requirements:
     - numpy
     - pip
     - python
-    - libpython
+    - if: match(python, ">=3.15")
+      then: libpython
     - scikit-build-core
     - setuptools_scm
   run:
     - ${{ stdlib('c') }}
     - python
-    - libpython
+    - if: match(python, ">=3.15")
+      then: libpython
     - numpy
 
 tests:
