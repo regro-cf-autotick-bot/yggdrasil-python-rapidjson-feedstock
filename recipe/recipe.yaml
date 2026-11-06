@@ -13,13 +13,22 @@ source:
 build:
   number: 4
   script:
-    - if: unix
-      then:
-        - 'CMAKE_GENERATOR="Ninja" ${{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv '
-    - if: win
-      then:
-        - 'set "SKBUILD_CMAKE_ARGS=-G Ninja"'
-        - '${{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv '
+    content:
+      - if: unix
+        then: |
+          if [[ "${{ python }}" == *t ]]; then
+            export CMAKE_ARGS="${CMAKE_ARGS} -DPython3_FIND_ABI=ANY;ANY;ANY;ON"
+          fi
+          export CMAKE_GENERATOR="Ninja"
+          ${{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+      - if: win
+        then: |
+          set "PYTHON_VERSION=${{ python }}"
+          IF "%PYTHON_VERSION:~-1%"=="t" (
+            set "CMAKE_ARGS=%CMAKE_ARGS% -DPython3_FIND_ABI=ANY;ANY;ANY;ON"
+          )
+          set "SKBUILD_CMAKE_ARGS=-G Ninja"
+          ${{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   build:
